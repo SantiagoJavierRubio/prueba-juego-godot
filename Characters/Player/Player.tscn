@@ -1,31 +1,33 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Characters/Character.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Assets/Sprites/0x72_DungeonTilesetII_v1.4.png" type="Texture" id=2]
-[ext_resource path="res://Characters/Player.gd" type="Script" id=3]
+[ext_resource path="res://Characters/Player/Player.gd" type="Script" id=2]
+[ext_resource path="res://Characters/Player/PlayerSM.gd" type="Script" id=3]
+[ext_resource path="res://Items/Weapons/Sword.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Assets/Sprites/0x72_DungeonTilesetII_v1.4.png" type="Texture" id=5]
 
 [sub_resource type="AtlasTexture" id=8]
-atlas = ExtResource( 2 )
+atlas = ExtResource( 5 )
 region = Rect2( 128, 64, 16, 32 )
 
 [sub_resource type="AtlasTexture" id=9]
-atlas = ExtResource( 2 )
+atlas = ExtResource( 5 )
 region = Rect2( 144, 64, 16, 32 )
 
 [sub_resource type="AtlasTexture" id=1]
-atlas = ExtResource( 2 )
+atlas = ExtResource( 5 )
 region = Rect2( 128, 64, 16, 32 )
 
 [sub_resource type="AtlasTexture" id=2]
-atlas = ExtResource( 2 )
+atlas = ExtResource( 5 )
 region = Rect2( 144, 64, 16, 32 )
 
 [sub_resource type="AtlasTexture" id=3]
-atlas = ExtResource( 2 )
+atlas = ExtResource( 5 )
 region = Rect2( 160, 64, 16, 32 )
 
 [sub_resource type="AtlasTexture" id=4]
-atlas = ExtResource( 2 )
+atlas = ExtResource( 5 )
 region = Rect2( 176, 64, 16, 32 )
 
 [sub_resource type="SpriteFrames" id=5]
@@ -42,7 +44,7 @@ animations = [ {
 } ]
 
 [sub_resource type="RectangleShape2D" id=7]
-extents = Vector2( 4.5, 6.5 )
+extents = Vector2( 4.5, 3.5 )
 
 [sub_resource type="Animation" id=10]
 resource_name = "idle"
@@ -103,17 +105,26 @@ tracks/1/keys = {
 }
 
 [node name="Player" instance=ExtResource( 1 )]
+collision_layer = 2
+collision_mask = 5
+script = ExtResource( 2 )
+
+[node name="StateMachine" parent="." index="0"]
 script = ExtResource( 3 )
 
 [node name="AnimatedSprite" parent="." index="1"]
+z_index = 1
 frames = SubResource( 5 )
 animation = "idle"
 offset = Vector2( 0, -8 )
 
 [node name="CollisionShape2D" parent="." index="2"]
-position = Vector2( 0.5, 0.5 )
+position = Vector2( -0.5, 4.5 )
 shape = SubResource( 7 )
 
 [node name="AnimationPlayer" parent="." index="3"]
 anims/idle = SubResource( 10 )
 anims/move = SubResource( 6 )
+
+[node name="Weapon" parent="." index="4" instance=ExtResource( 4 )]
+position = Vector2( 4, 0 )
