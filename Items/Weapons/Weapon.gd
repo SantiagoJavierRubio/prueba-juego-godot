@@ -1,13 +1,19 @@
 extends Node2D
 class_name Weapon
 
-export(int) var damage:int = 10
+export(int) var damage: int = 1
+export(float) var agility: float = 1.0
 
 onready var animation_player: AnimationPlayer = $AnimationPlayer
 onready var hitbox: Area2D = $Sprite/Hitbox
+onready var agility_timer: Timer = $AgilityTimer
+
+var can_attack: bool = true
 
 func _ready():
 	hitbox.damage = damage
+	agility_timer.wait_time = (1.0/agility) + 0.075
+	animation_player.playback_speed = 1.0 * agility
 
 func aim(mouse_direction) -> void:
 	self.rotation = mouse_direction.angle()
@@ -18,4 +24,10 @@ func aim(mouse_direction) -> void:
 	hitbox.knockback_direction = mouse_direction
 	
 func attack() -> void:
-	pass
+	if can_attack:
+		can_attack = false
+		agility_timer.start()
+		animation_player.play("attack")
+
+func _on_AgilityTimer_timeout():
+	can_attack = true

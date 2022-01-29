@@ -14,6 +14,9 @@ func _state_logic(delta):
 		states.chase:
 			parent.chase()
 			parent.move()
+		states.idle:
+			parent.chase()
+			parent.move()
 
 func _get_transition(delta):
 	match state:

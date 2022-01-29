@@ -8,6 +8,7 @@ export(int) var chase_speed: int = 1
 
 onready var navigation: Navigation2D = get_tree().current_scene.get_node("LevelMap/Navigation2D")
 onready var player: KinematicBody2D = get_tree().current_scene.get_node("Player")
+onready var PathTimer: Timer = $PathTimer
 
 func chase() -> void:
 	if path:
@@ -22,7 +23,15 @@ func chase() -> void:
 		elif vector_to_next_point.x < 0 and mov_direction.x < 0 and not animated_sprite.flip_h:
 			animated_sprite.flip_h = true
 		mov_direction = vector_to_next_point
+		state_machine.set_state(state_machine.states.chase)
+	else:
+		state_machine.set_state(state_machine.states.idle)
 
 
 func _on_PathTimer_timeout() -> void:
-	path = navigation.get_simple_path(global_position, player.global_position)
+	if is_instance_valid(player):
+		path = navigation.get_simple_path(global_position, player.global_position)
+	else:
+		PathTimer.stop()
+		path = []
+		mov_direction = Vector2.ZERO

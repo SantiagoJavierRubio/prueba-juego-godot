@@ -1,6 +1,11 @@
 extends Character
 
-onready var weapon: Node2D = $Weapon
+onready var weapons: Node = $Weapons
+var weapon: Node2D
+
+func _ready():
+	weapon = weapons.get_child(0)
+	weapon.show()
 
 func _process(_delta: float) -> void:
 	var mouse_direction: Vector2 = (get_global_mouse_position() - global_position).normalized()
@@ -11,6 +16,11 @@ func _process(_delta: float) -> void:
 		animated_sprite.flip_h = false
 		weapon.z_index = 0
 	weapon.aim(mouse_direction)
+	
+func _change_weapon() -> void:
+	weapon.hide()
+	weapon = weapons.get_child(1)
+	weapon.show()
 
 func get_input() -> void:
 	mov_direction = Vector2.ZERO
@@ -24,3 +34,5 @@ func get_input() -> void:
 		mov_direction += Vector2.LEFT
 	if Input.is_action_just_pressed("ui_attack"):
 		weapon.attack()
+	if Input.is_action_just_pressed("ui_accept"):
+		_change_weapon()

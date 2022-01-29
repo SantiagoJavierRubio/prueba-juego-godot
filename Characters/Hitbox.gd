@@ -3,7 +3,7 @@ class_name Hitbox
 
 var damage: int
 var knockback_direction: Vector2 = Vector2.ZERO
-export(int) var knockback_force: int = 100
+export(int) var knockback_force: int = 250
 
 onready var collision_shape: CollisionShape2D = get_child(0)
 
