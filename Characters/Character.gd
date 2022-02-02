@@ -4,9 +4,12 @@ class_name Character
 
 const FRICTION: float = 0.15
 
+export(int) var hp: int = 10 setget set_hp
+signal hp_changed(new_hp)
+
 export(int) var acceleration: int = 20
 export(int) var max_speed: int = 100
-export(int) var hp: int = 10
+
 
 onready var animated_sprite: AnimatedSprite = $AnimatedSprite
 onready var state_machine: Node = $StateMachine
@@ -25,10 +28,14 @@ func move() -> void:
 	
 func take_damage(dmg: int, dir: Vector2, force: int ) -> void:
 	if state_machine.state != state_machine.states.hit:
-		hp -= dmg
+		self.hp -= dmg
 		if hp > 0:
 			velocity += dir * force
 			state_machine.set_state(state_machine.states.hit)
 		else:
 			velocity += dir * force * 2
 			state_machine.set_state(state_machine.states.die)
+
+func set_hp(new_hp: int) -> void:
+	hp = new_hp
+	emit_signal("hp_changed", new_hp)

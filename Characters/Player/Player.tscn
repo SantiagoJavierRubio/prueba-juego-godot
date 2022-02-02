@@ -351,6 +351,20 @@ tracks/6/keys = {
 "update": 1,
 "values": [ true ]
 }
+tracks/7/type = "method"
+tracks/7/path = NodePath(".")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0.41 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "switch_to_global_camera"
+} ]
+}
 
 [sub_resource type="Animation" id=13]
 resource_name = "hit"
@@ -433,6 +447,30 @@ tracks/1/keys = {
 "update": 1,
 "values": [ 0, 1 ]
 }
+tracks/2/type = "value"
+tracks/2/path = NodePath("AnimatedSprite:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("CollisionShape2D:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
 
 [sub_resource type="Animation" id=6]
 resource_name = "move"
@@ -480,6 +518,7 @@ offset = Vector2( 0, -8 )
 [node name="CollisionShape2D" parent="." index="2"]
 position = Vector2( -0.5, 4.5 )
 shape = SubResource( 7 )
+disabled = true
 
 [node name="AnimationPlayer" parent="." index="3"]
 anims/die = SubResource( 52 )
@@ -498,3 +537,6 @@ agility = 8.0
 [node name="GreatSword" parent="Weapons" index="1" instance=ExtResource( 4 )]
 visible = false
 damage = 25
+
+[node name="Camera2D" type="Camera2D" parent="." index="5"]
+current = true

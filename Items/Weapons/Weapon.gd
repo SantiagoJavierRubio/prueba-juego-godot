@@ -11,6 +11,7 @@ onready var agility_timer: Timer = $AgilityTimer
 var can_attack: bool = true
 
 func _ready():
+	hitbox.get_child(0).disabled = true
 	hitbox.damage = damage
 	agility_timer.wait_time = (1.0/agility) + 0.075
 	animation_player.playback_speed = 1.0 * agility

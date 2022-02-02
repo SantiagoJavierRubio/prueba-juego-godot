@@ -36,3 +36,9 @@ func get_input() -> void:
 		weapon.attack()
 	if Input.is_action_just_pressed("ui_accept"):
 		_change_weapon()
+
+func switch_to_global_camera() -> void:
+		var global_camera: Camera2D = get_parent().get_node("Camera2D")
+		global_camera.position = position
+		global_camera.current = true
+		$Camera2D.current = false
