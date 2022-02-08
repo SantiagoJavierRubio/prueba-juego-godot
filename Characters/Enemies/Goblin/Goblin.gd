@@ -1,7 +1,8 @@
 extends Enemy
 
-onready var hitbox: Area2D = $Hitbox
+onready var hitbox: Area2D = get_node("Hitbox")
 export(int) var damage: int = 10
+
 
 func _ready() -> void:
 	hitbox.damage = damage

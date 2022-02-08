@@ -9,6 +9,7 @@ var fireball_speed: float = 0
 
 func _ready():
 	animation_player.play("flying")
+	enemy_exited = false
 
 func launch(initial_pos: Vector2, dir: Vector2, speed: int) -> void:
 	position = initial_pos

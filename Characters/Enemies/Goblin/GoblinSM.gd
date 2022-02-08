@@ -15,8 +15,13 @@ func _state_logic(delta):
 			parent.chase()
 			parent.move()
 		states.idle:
-			parent.chase()
+			parent.roam()
 			parent.move()
+			if parent.velocity.length() > 1 and animation_player.current_animation != "move":
+				animation_player.play("move")
+			elif parent.velocity.length() < 1 and animation_player.current_animation != "idle":
+				animation_player.play("idle")
+				
 
 func _get_transition(delta):
 	match state:

@@ -1,11 +1,11 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://Characters/Enemies/Enemy.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Characters/Enemies/Goblin/Goblin.gd" type="Script" id=2]
 [ext_resource path="res://Assets/Sprites/0x72_DungeonTilesetII_v1.4.png" type="Texture" id=3]
 [ext_resource path="res://Characters/Enemies/Goblin/GoblinSM.gd" type="Script" id=4]
 [ext_resource path="res://Assets/Sprites/enemy_afterdead_explosion_anim_spritesheet.png" type="Texture" id=5]
-[ext_resource path="res://Characters/Hitbox.gd" type="Script" id=6]
+[ext_resource path="res://Characters/Enemies/Goblin/GoblinHitbox.gd" type="Script" id=6]
 
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 3 )
@@ -350,10 +350,14 @@ tracks/3/keys = {
 [sub_resource type="RectangleShape2D" id=19]
 extents = Vector2( 6, 6 )
 
+[sub_resource type="CircleShape2D" id=20]
+radius = 50.04
+
 [node name="Goblin" instance=ExtResource( 1 )]
 collision_layer = 4
 collision_mask = 5
 script = ExtResource( 2 )
+damage = 100
 
 [node name="StateMachine" parent="." index="0"]
 script = ExtResource( 4 )
@@ -379,9 +383,15 @@ anims/move = SubResource( 12 )
 collision_layer = 0
 collision_mask = 2
 script = ExtResource( 6 )
-knockback_force = 300
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" index="0"]
 position = Vector2( 0, -2 )
 shape = SubResource( 19 )
 disabled = true
+
+[node name="PlayerDetector" parent="." index="7"]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" parent="PlayerDetector" index="0"]
+shape = SubResource( 20 )

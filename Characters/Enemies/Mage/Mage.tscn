@@ -65,8 +65,8 @@ animations = [ {
 "speed": 8.0
 } ]
 
-[sub_resource type="RectangleShape2D" id=14]
-extents = Vector2( 7, 3.5 )
+[sub_resource type="CircleShape2D" id=17]
+radius = 7.0
 
 [sub_resource type="Animation" id=15]
 resource_name = "die"
@@ -211,7 +211,7 @@ tracks/4/keys = {
 
 [sub_resource type="Animation" id=8]
 resource_name = "idle"
-length = 0.394
+length = 0.8
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("AnimatedSprite:animation")
@@ -232,7 +232,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.2 ),
+"times": PoolRealArray( 0, 0.4 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ 0, 1 ]
@@ -307,8 +307,8 @@ animation = "move"
 frame = 3
 
 [node name="CollisionShape2D" parent="." index="2"]
-position = Vector2( -1, 4.5 )
-shape = SubResource( 14 )
+position = Vector2( -1, 1 )
+shape = SubResource( 17 )
 
 [node name="AnimationPlayer" parent="." index="3"]
 anims/die = SubResource( 15 )
@@ -322,5 +322,8 @@ one_shot = true
 [node name="ProximityAttack" parent="." index="6" instance=ExtResource( 6 )]
 knockback_force = 600
 proximity_attack_cast_time = 1000
+
+[node name="AimRayCast" type="RayCast2D" parent="." index="7"]
+enabled = true
 
 [connection signal="timeout" from="AttackTimer" to="." method="_on_AttackTimer_timeout"]

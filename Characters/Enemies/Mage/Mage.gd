@@ -14,26 +14,32 @@ export(int) var min_range:int = 60
 
 onready var attack_timer: Timer = $AttackTimer
 onready var proximity_attack: Area2D = $ProximityAttack
-var can_attack: bool = true
+onready var aim_raycast: RayCast2D = $AimRayCast
+
+var can_attack: bool = false
 
 func _ready():
 	proximity_attack.damage = proximity_damage
 	attack_timer.wait_time = cast_time/100
+	attack_timer.start()
 	
 func _on_PathTimer_timeout() -> void:
 	if is_instance_valid(player):
+		aim_raycast.cast_to = player.position - global_position
 		distance_to_player = (player.position - global_position).length()
 		if distance_to_player <= PROXIMITY_ATTACK_DISTANCE and can_attack:
 			proximity_attack.trigger_attack(player.position)
 		if distance_to_player > max_range:
 			_get_path_to_player()
-		elif distance_to_player < min_range:
+		if distance_to_player < min_range and not aim_raycast.is_colliding():
 			_get_path_away_from_player()
 		else:
-			if can_attack:
+			if can_attack and not (state_machine.state == state_machine.states.hit or state_machine.state == state_machine.states.die) and not aim_raycast.is_colliding():
 				can_attack = false
 				_throw_fireball()
 				attack_timer.start()
+			if aim_raycast.is_colliding():
+				_get_path_to_player()
 	else:
 		PathTimer.stop()
 		path = []

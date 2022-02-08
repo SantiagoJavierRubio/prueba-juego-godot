@@ -1,12 +1,14 @@
-[gd_scene load_steps=71 format=2]
+[gd_scene load_steps=73 format=2]
 
 [ext_resource path="res://Characters/Character.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Characters/Player/Player.gd" type="Script" id=2]
 [ext_resource path="res://Characters/Player/PlayerSM.gd" type="Script" id=3]
-[ext_resource path="res://Items/Weapons/GreatSword.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Items/Weapons/GreatSword/GreatSword.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Assets/Sprites/0x72_DungeonTilesetII_v1.4.png" type="Texture" id=5]
 [ext_resource path="res://Assets/Sprites/IceShatter_2_96x96.png" type="Texture" id=6]
-[ext_resource path="res://Items/Weapons/Sword.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Items/Weapons/Sword/Sword.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Characters/Player/PlayerCamea.gd" type="Script" id=8]
+[ext_resource path="res://Items/Weapons/Bow/Bow.tscn" type="PackedScene" id=9]
 
 [sub_resource type="AtlasTexture" id=8]
 atlas = ExtResource( 5 )
@@ -259,8 +261,8 @@ animations = [ {
 "speed": 16.0
 } ]
 
-[sub_resource type="RectangleShape2D" id=7]
-extents = Vector2( 4.5, 3.5 )
+[sub_resource type="CircleShape2D" id=64]
+radius = 5.5
 
 [sub_resource type="Animation" id=52]
 resource_name = "die"
@@ -418,6 +420,18 @@ tracks/3/keys = {
 "update": 0,
 "values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 0, 0, 1 ), Color( 1, 1, 1, 1 ) ]
 }
+tracks/4/type = "value"
+tracks/4/path = NodePath("CollisionShape2D:disabled")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
 
 [sub_resource type="Animation" id=10]
 resource_name = "idle"
@@ -512,12 +526,12 @@ script = ExtResource( 3 )
 [node name="AnimatedSprite" parent="." index="1"]
 z_index = 1
 frames = SubResource( 5 )
-animation = "idle"
+animation = "hit"
 offset = Vector2( 0, -8 )
 
 [node name="CollisionShape2D" parent="." index="2"]
-position = Vector2( -0.5, 4.5 )
-shape = SubResource( 7 )
+position = Vector2( 0.5, 1 )
+shape = SubResource( 64 )
 disabled = true
 
 [node name="AnimationPlayer" parent="." index="3"]
@@ -531,12 +545,24 @@ position = Vector2( 6, 1 )
 
 [node name="Sword" parent="Weapons" index="0" instance=ExtResource( 7 )]
 visible = false
-damage = 10
 agility = 8.0
 
 [node name="GreatSword" parent="Weapons" index="1" instance=ExtResource( 4 )]
 visible = false
+agility = 3.0
+
+[node name="Bow" parent="Weapons" index="2" instance=ExtResource( 9 )]
+visible = false
+agility = 4.0
 damage = 25
 
 [node name="Camera2D" type="Camera2D" parent="." index="5"]
 current = true
+drag_margin_h_enabled = true
+drag_margin_v_enabled = true
+drag_margin_left = 0.25
+drag_margin_top = 0.3
+drag_margin_right = 0.25
+drag_margin_bottom = 0.3
+editor_draw_drag_margin = true
+script = ExtResource( 8 )

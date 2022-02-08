@@ -1,6 +1,5 @@
 extends StateMachine
 
-
 func _init() -> void:
 	add_state("idle")
 	add_state("chase")
@@ -21,10 +20,10 @@ func _state_logic(delta):
 func _get_transition(delta):
 	match state:
 		states.idle:
-			if parent.distance_to_player > parent.max_range or parent.distance_to_player < parent.min_range:
+			if parent.distance_to_player > parent.max_range or parent.distance_to_player < parent.min_range or parent.aim_raycast.is_colliding():
 				return states.chase
 		states.chase:
-			if parent.distance_to_player < parent.max_range and parent.distance_to_player > parent.min_range:
+			if parent.distance_to_player < parent.max_range and parent.distance_to_player > parent.min_range and not parent.aim_raycast.is_colliding():
 				return states.idle
 		states.hit:
 			if not animation_player.is_playing():
@@ -41,6 +40,8 @@ func _enter_state(new_state, old_state):
 			animation_player.play('hit')
 		states.die:
 			animation_player.play('die')
+		states.attack:
+			animation_player.play('move')
 
 func _exit_state(old_state, new_state):
 	pass

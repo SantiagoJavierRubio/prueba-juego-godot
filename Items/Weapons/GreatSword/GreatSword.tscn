@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Items/Weapons/Weapon.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Assets/Sprites/weapon_anime_sword.png" type="Texture" id=2]
-[ext_resource path="res://Items/Weapons/GreatSword.gd" type="Script" id=3]
+[ext_resource path="res://Items/Weapons/GreatSword/GreatSword.gd" type="Script" id=3]
 [ext_resource path="res://Assets/Sprites/slash_effect_anim_spritesheet.png" type="Texture" id=4]
 
 [sub_resource type="CapsuleShape2D" id=3]
